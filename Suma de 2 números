@@ -1,0 +1,72 @@
+---------------------main.js--------------------------
+
+
+const vista = document.getElementById("root");
+
+var mensaje = "Hola desde Js"
+
+vista.innerHTML +=`<h1>${mensaje}</h1>`
+
+
+
+mensaje =` 
+<form id = "formularioSuma">
+<h2>Suma</h2>
+<input required type="number" placeholder="Numero 1"/>
+<input required type="number" placeholder="Numero 2"/>
+<input type="submit" value ="Sumar"/>
+ </form>`
+
+ vista.innerHTML += mensaje
+//Función callback
+ const sumar = (a,b,callback)=>{
+    setTimeout(()=>{
+    let mensaje = (a+b)>0? 
+    callback("El resultado es: "+ (a+b),null):
+    callback(null,"La operacion no se puede realizar ")
+    },3000);
+ };
+
+const formulario = document.getElementById("formularioSuma");
+
+const eventoSumar = (e)=>{
+    e.preventDefault();
+    var a = parseFloat(formulario.elements[0].value);
+    var b = parseFloat(formulario.elements[1].value);
+    sumar(a,b,(respuesta, error)=>{
+        if (respuesta){
+           
+            const respuestaHTML = document.createElement('p');
+            respuestaHTML.innerHTML = respuesta;
+            vista.appendChild(respuestaHTML);
+
+            
+        }else{
+            alert(error);
+        }
+
+    });
+}
+
+formulario.addEventListener("submit", eventoSumar);
+ //callback("si es verdadero", null)
+ //callback(null, "si es falso")
+
+
+
+----------------------index.js--------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+</html>
+
